@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Web;
 using System.Xml;
 using Sitecore.Configuration;
+using Sitecore.Data.Items;
 
 namespace CustomItemGenerator.Settings
 {
@@ -24,20 +26,20 @@ namespace CustomItemGenerator.Settings
 			FilepathProvider = string.Empty;
 			FieldMappings = new List<FieldMapping>();
 
+			//Set the base path to the nvelocity templates
+			string basePath = HttpContext.Current.Server.MapPath("/");
+			NvelocityTemplatePath = basePath + @"\sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates";
+
 			foreach (XmlNode childNode in n.ChildNodes)
 			{
 				switch (childNode.Name)
 				{
-					case "BaseNamespace":
+					case "Base.Namespace":
 						BaseNamespace = childNode.InnerText;
 						break;
 
-					case "BaseFileOutputPath":
+					case "Base.FileOutputPath":
 						BaseFileOutputPath = childNode.InnerText;
-						break;
-
-					case "NvelocityTemplatePath":
-						NvelocityTemplatePath = childNode.InnerText;
 						break;
 
 					case "Provider.Namespace":

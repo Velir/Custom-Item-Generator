@@ -11,7 +11,7 @@ namespace CustomItemGenerator.SitecoreApp
 			if (context.Items.Length != 1) return;
 			
 			//TODO put the GUIDS used here somewhere central
-			//If this is a template, launch the singe template generator
+			//If this is a template, launch the single template generator
 			if (context.Items[0].TemplateID.ToString() == "{AB86861A-6030-46C5-B394-E8F99E8B87DB}")
 			{
 				//Build the url for the control

@@ -53,20 +53,20 @@
   <ItemGroup>
     <Reference Include="Sitecore.Client, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\inetpub\wwwroot\SitecoreTools\Website\bin\Sitecore.Client.dll</HintPath>
+      <HintPath>lib\Sitecore.Client.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\inetpub\wwwroot\SitecoreTools\Website\bin\Sitecore.Kernel.dll</HintPath>
+      <HintPath>lib\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\inetpub\wwwroot\SitecoreTools\Website\bin\Sitecore.Logging.dll</HintPath>
+      <HintPath>lib\Sitecore.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.NVelocity, Version=0.4.2.8580, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\inetpub\wwwroot\SitecoreTools\Website\bin\Sitecore.NVelocity.dll</HintPath>
+      <HintPath>lib\Sitecore.NVelocity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -84,6 +84,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomItems\CustomItemSettingsItem.base.cs" />
+    <Compile Include="CustomItems\CustomItemSettingsItem.cs" />
+    <Compile Include="CustomItems\FieldMappingItem.cs" />
     <Compile Include="Fields\BaseCustomField.cs" />
     <Compile Include="CodeGeneration\CodeGenerator.cs" />
     <Compile Include="Fields\SimpleTypes\CustomCheckboxField.cs" />

@@ -7,7 +7,7 @@ using CustomItemGenerator.Fields.LinkTypes;
 using CustomItemGenerator.Fields.ListTypes;
 using CustomItemGenerator.Fields.SimpleTypes;
 
-namespace SitecoreTools.Library.CustomItems.DeveloperTools.CustomItem
+namespace SitecoreTools.Library.CustomItems.DeveloperTools
 {
 public partial class CustomItemSettingsItem : CustomItem
 {

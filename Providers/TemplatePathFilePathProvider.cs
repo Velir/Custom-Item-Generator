@@ -15,7 +15,7 @@ namespace CustomItemGenerator.Providers
 		public string GetFolderPath(TemplateItem template,string baseFilePath)
 		{
 			string relativeTemplatePath = TemplateUtil.GetRelativeTemplatePath(template).Replace("/", "\\");
-			relativeTemplatePath = relativeTemplatePath.Replace(" ", string.Empty);
+			relativeTemplatePath = CodeUtil.CleanStringOfIllegalCharacters(relativeTemplatePath);
 
 			if(!baseFilePath.EndsWith("\\"))
 			{

@@ -24,116 +24,23 @@ namespace CustomItemGenerator.Util
 		{
 			string className = string.Empty;
 
-			//If the template name ends with the word item do not append item
+			//If the template name ends with the word "item" do not append item
 			//onto the class name, this avoids situations such as templateItemItem
-			if (template.Name.ToLower().EndsWith("item"))
+			if (!template.Name.ToLower().EndsWith("item"))
 			{
-				className = template.Name.Replace(" ", string.Empty);
+				className = template.Name + "Item";
 			}
 			else
 			{
-				className = template.Name.Replace(" ", string.Empty) + "Item";
-			}
-
-			//If the class starts with a _, then strip it off, this is used for base templates
-			//and is not what we want in code
-			/*if (className.StartsWith("_"))
-			{
-				className = className.Substring(1);
-			}
-			*/
-			return className;
-		}
-		/*
-		public static string GetCustomFieldTypeName(TemplateFieldItem field)
-		{
-			string fieldType = field.Type.ToLower();
-
-			//TODO should password fields be different
-			//Text Fields
-			if (
-				fieldType == "rich text" ||
-				fieldType == "single-line text" ||
-				fieldType == "multi-line text" ||
-				fieldType == "password")
-			{
-				return typeof(CustomTextField).Name;
-			}
-
-			//File Field
-			if (
-				fieldType == "file")
-			{
-				return typeof(CustomFileField).Name;
+				className = template.Name;
 			}
 			
-			//Image Field
-			if (fieldType == "image")
-			{
-				return typeof(CustomImageField).Name;
-			}
+			//Strip out spaces and dashes from the class name
+			className = CleanStringOfIllegalCharacters(className);
 
-			//Date Fields
-			if (
-				fieldType == "date" ||
-				fieldType == "datetime")
-			{
-				return typeof(CustomDateField).Name;
-			}
-
-			//Checkbox
-			if (fieldType == "checkbox")
-			{
-				return typeof(CustomCheckboxField).Name;
-			}
-
-			//Checklist
-			if (fieldType == "checklist")
-			{
-				return typeof(CustomChecklistField).Name;
-			}
-
-			//Drop Tree
-			if (fieldType == "droptree" ||
-				fieldType == "droplink")
-			{
-				return typeof (CustomLookupField).Name;
-			}
-
-			//General Link
-			if (fieldType == "general link")
-			{
-				return typeof(CustomGeneralLinkField).Name;
-			}
-
-			//Multilist
-			if (fieldType == "multilist" ||
-				fieldType =="sortingmultilist" ||
-				fieldType == "droplist")
-			{
-				return typeof(CustomMultiListField).Name;
-			}
-
-			//Treelist
-			if (fieldType == "treelist" ||
-				fieldType == "treelistex")
-			{
-				return typeof(CustomTreeListField).Name;
-			}
-
-			//TODO Figure out what to do with the number field, a double?
-			//Integer
-			if (
-				fieldType == "integer" ||
-				fieldType == "number")
-			{
-				return typeof(CustomIntegerField).Name;
-			}
-
-
-			return string.Empty;
+			return className;
 		}
-		*/
+		
 		public static string GetCodeFileString(HttpServerUtility server, CustomItemInformation info)
 		{
 			VelocityEngine velocity = new VelocityEngine();
@@ -157,9 +64,11 @@ namespace CustomItemGenerator.Util
 			return writer.GetStringBuilder().ToString();
 		}
 
-		public static void WriteCodeFile(string fileNameAndPath, string fileContents)
+		public static string CleanStringOfIllegalCharacters(string inputString)
 		{
-			
+			inputString = inputString.Replace(" ", string.Empty);
+			inputString = inputString.Replace("-", string.Empty);
+			return inputString;
 		}
 
 		

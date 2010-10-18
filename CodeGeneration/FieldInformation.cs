@@ -17,7 +17,7 @@ namespace CustomItemGenerator.CodeGeneration
 		public FieldInformation(string fieldName,string fieldType)
 		{
 			FieldName = fieldName;
-			MethodName = fieldName.Replace(" ", string.Empty);
+			MethodName = CodeUtil.CleanStringOfIllegalCharacters(fieldName);
 			FieldType = fieldType;
 		}
 

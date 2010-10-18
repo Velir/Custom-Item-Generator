@@ -17,11 +17,13 @@ namespace CustomItemGenerator.Providers
 		public string GetNamespace(TemplateItem template, string baseNamespace)
 		{
 			string relativePath = TemplateUtil.GetRelativeTemplatePath(template);
-			relativePath = relativePath.Replace("/", ".").Replace(" ", string.Empty);
-
+			
 			if(string.IsNullOrEmpty(relativePath)) return baseNamespace;
-		
-				return baseNamespace + "." + relativePath.Replace("/", ".").Replace(" ", string.Empty);
+
+			relativePath = relativePath.Replace("/", ".");
+			relativePath = CodeUtil.CleanStringOfIllegalCharacters(relativePath);
+
+			return baseNamespace + "." + relativePath;
 			
 		}
 	}
