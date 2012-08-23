@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Commons.Collections;
-using CustomItemGenerator.CodeGeneration;
 using CustomItemGenerator.Util;
 using NVelocity;
 using NVelocity.App;
 
-namespace CustomItemGenerator
+namespace CustomItemGenerator.CodeGeneration
 {
 	public class CodeGenerator
 	{
