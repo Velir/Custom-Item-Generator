@@ -34,18 +34,10 @@ namespace CustomItemGenerator
 		{
 			VelocityEngine velocity = new VelocityEngine();
 
+			TextReader reader = new StreamReader(NvelocityUtil.GetTemplateFolderPath() + "\\CustomItem.base.vm");
+			string template = reader.ReadToEnd();
 
-			//Set the file.resource.loader.path property so that nvelocity can find the 
-			//custom item template files
-			ExtendedProperties props = new ExtendedProperties();
-			props.SetProperty("file.resource.loader.path", NvelocityUtil.GetTemplateFolderPath());
-			velocity.Init(props);
-
-			//TODO extra checking to make sure we get back a template
-			//Attempt to load the NVelocity template file
-			Template baseTemplate = velocity.GetTemplate("CustomItem.base.vm");
-
-			//Setup the template with the needed code, and then do the merge
+			//Setup the template with the needed code, and then do the merge	
 			VelocityContext baseContext = new VelocityContext();
 
 			baseContext.Put("Usings", CustomItemInformation.Usings);
@@ -53,26 +45,23 @@ namespace CustomItemGenerator
 			baseContext.Put("CustomItemFields", CustomItemInformation.Fields);
 			baseContext.Put("CustomItemInformation", CustomItemInformation);
 
-			StringWriter writer = new StringWriter();
-			baseTemplate.Merge(baseContext, writer);
-
 			//Get the full file path to the .base.cs file
 			string filePath = FileUtil.GetClassFilePath(CustomItemInformation.ClassName,
 			                                            CustomItemInformation.FolderPathProvider.GetFolderPath(
 			                                            	CustomItemInformation.Template, CustomItemInformation.BaseFileRoot));
 			
 
-
 			//Build the folder strucutre so that we have a place to put the .base.cs file
 			BuildFolderStructure(CustomItemInformation);
-
+			
 			//Write the .base.cs file
 			if (GenerateBaseFile)
 			{
 				using (StreamWriter sw = new StreamWriter(filePath))
 				{
 					//TODO add error checking
-					sw.Write(writer.GetStringBuilder().ToString());
+					Velocity.Init();
+					sw.Write(Sitecore.Text.NVelocity.VelocityHelper.Evaluate(baseContext, template, "base-custom-item"));
 					GenerationMessage += filePath + " successfully written\n\n";
 				}
 			}
@@ -121,7 +110,8 @@ namespace CustomItemGenerator
 		private void OuputPartialFiles(VelocityEngine velocity)
 		{
 			StringWriter writer;
-			Template partialTemplate = velocity.GetTemplate("CustomItem.partial.vm");
+			TextReader reader = new StreamReader(NvelocityUtil.GetTemplateFolderPath() + "\\CustomItem.partial.vm");
+			string template = reader.ReadToEnd();
 			string folderPath = CustomItemInformation.FolderPathProvider.GetFolderPath(CustomItemInformation.Template,
 			                                                                         CustomItemInformation.BaseFileRoot);
 
@@ -129,7 +119,7 @@ namespace CustomItemGenerator
 			partialContext.Put("CustomItemInformation", CustomItemInformation);
 
 			writer = new StringWriter();
-			partialTemplate.Merge(partialContext, writer);
+			writer.Write(Sitecore.Text.NVelocity.VelocityHelper.Evaluate(partialContext, template, "base-custom-item"));
 
 			//.instance.cs
 			if (GenerateInstanceFile)
