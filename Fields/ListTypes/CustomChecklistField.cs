@@ -9,9 +9,14 @@ namespace CustomItemGenerator.Fields.ListTypes
 	{
 
 		public CustomChecklistField(Item item, MultilistField field)
-				: base(item, field)
-			{
-			}
+			: base(item, field)
+		{
+		}
+
+		public static implicit operator List<Item>(CustomChecklistField checklistField)
+		{
+			return checklistField.CheckedItems;
+		}
 
 		public List<Item> CheckedItems
 		{

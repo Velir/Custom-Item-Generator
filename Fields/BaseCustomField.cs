@@ -40,7 +40,5 @@ namespace CustomItemGenerator.Fields
 				return field;
 			}
 		}
-	
-		
 	}
 }

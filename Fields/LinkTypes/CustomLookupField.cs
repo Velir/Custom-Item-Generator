@@ -9,6 +9,11 @@ namespace CustomItemGenerator.Fields.LinkTypes
 		{
 		}
 
+		public static implicit operator Item(CustomLookupField lookupField)
+		{
+			return lookupField.Item;
+		}
+
 		public Item Item
 		{
 			get

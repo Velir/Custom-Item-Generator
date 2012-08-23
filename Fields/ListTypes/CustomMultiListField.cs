@@ -12,6 +12,11 @@ namespace CustomItemGenerator.Fields.ListTypes
 		{
 		}
 
+		public static implicit operator List<Item>(CustomMultiListField multilistField)
+		{
+			return multilistField.ListItems;
+		}
+
 		public List<Item> ListItems
 		{
 			get

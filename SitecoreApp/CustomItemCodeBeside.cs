@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Web;
 using CustomItemGenerator.CodeGeneration;
 using CustomItemGenerator.Interfaces;
 using CustomItemGenerator.Providers;
@@ -52,7 +53,7 @@ namespace CustomItemGenerator.SitecoreApp
 			{
 				if (!Context.ClientPage.IsEvent)
 				{
-					CustomItemSettings settings = new CustomItemSettings();
+					CustomItemSettings settings = new CustomItemSettings(HttpContext.Current);
 
 					string defaultNamespace = settings.BaseNamespace;
 					string defaultFilePath = settings.BaseFileOutputPath;
@@ -85,7 +86,7 @@ namespace CustomItemGenerator.SitecoreApp
 
 		protected override void OnOK(object sender, EventArgs args)
 		{
-			CustomItemSettings settings = new CustomItemSettings();
+			CustomItemSettings settings = new CustomItemSettings(HttpContext.Current);
 
 			ICustomItemNamespaceProvider namespaceProvider = AssemblyUtil.GetNamespaceProvider(settings.NamespaceProvider);
 			ICustomItemFolderPathProvider filePathProvider = AssemblyUtil.GetFilePathProvider(settings.FilepathProvider);
@@ -99,8 +100,6 @@ namespace CustomItemGenerator.SitecoreApp
 			SheerResponse.Alert(codeGenerator.GenerationMessage, new string[0]);
 
 			base.OnOK(sender, args);
-
-			//Sitecore.Context.Database.GetItem();
 		}
 	}
 }

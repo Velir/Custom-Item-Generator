@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using CustomItemGenerator.CodeGeneration;
 using CustomItemGenerator.Interfaces;
 using CustomItemGenerator.Settings;
@@ -52,7 +53,7 @@ namespace CustomItemGenerator.SitecoreApp
 			{
 				if (!Context.ClientPage.IsEvent)
 				{
-					CustomItemSettings settings = new CustomItemSettings();
+					CustomItemSettings settings = new CustomItemSettings(HttpContext.Current);
 
 					//Set the default namespace text box
 					string defaultNamespace = settings.BaseNamespace;
@@ -80,27 +81,14 @@ namespace CustomItemGenerator.SitecoreApp
 		}
 
 		/// <summary>
-		/// Gets the subitems below a root item taht are Sitecore templates 
-		/// </summary>
-		/// <param name="rootItem">The root item.</param>
-		/// <returns></returns>
-		private List<Item> GetTemplateSubitems(Item rootItem)
-		{
-			TemplateItem sitecoreTemplateItem = masterDb.GetItem("{AB86861A-6030-46C5-B394-E8F99E8B87DB}");
-
-			return (from Item child in rootItem.Axes.GetDescendants()
-			        where child.Template.ID == sitecoreTemplateItem.ID
-			        select child).OrderBy(i => i.Name).ToList();
-		}
-
-		/// <summary>
 		/// Fills the template list with applicable templates.
 		/// </summary>
 		protected void FillTemplateList()
 		{
 			TemplateList.Controls.Clear();
 
-			foreach (Item item in GetTemplateSubitems(templateFolder))
+			List<Item> templateSubitems = TemplateUtil.GetTemplateSubitems(this.templateFolder, this.masterDb);
+			foreach (Item item in templateSubitems)
 			{
 				ChecklistItem clItem = new ChecklistItem();
 				clItem.ID = Control.GetUniqueID("I");
@@ -125,7 +113,7 @@ namespace CustomItemGenerator.SitecoreApp
 
 				//Using the settings item get the providers needed for creating both the namespaces for the custom items
 				// as well as the file/folder strucutre.
-				CustomItemSettings settings = new CustomItemSettings();
+				CustomItemSettings settings = new CustomItemSettings(HttpContext.Current);
 				
 				ICustomItemNamespaceProvider namespaceProvider =
 					AssemblyUtil.GetNamespaceProvider(settings.NamespaceProvider);

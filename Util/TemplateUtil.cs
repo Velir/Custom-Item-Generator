@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Web;
 using CustomItemGenerator.CodeGeneration;
 using CustomItemGenerator.Settings;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 
 namespace CustomItemGenerator.Util
@@ -18,7 +20,7 @@ namespace CustomItemGenerator.Util
 		{
 			string fieldType = field.Type.ToLower();
 
-			CustomItemSettings settings = new CustomItemSettings();
+			CustomItemSettings settings = new CustomItemSettings(HttpContext.Current);
 
 			foreach (FieldMapping fieldMapping in settings.FieldMappings)
 			{
@@ -50,6 +52,21 @@ namespace CustomItemGenerator.Util
 		{
 			List<TemplateFieldItem> templateFields = GetAllUserFields(itemTemplate);
 			return templateFields.Select(templateField => new FieldInformation(templateField)).ToList();
+		}
+
+		/// <summary>
+		/// Gets the subitems below a root item taht are Sitecore templates 
+		/// </summary>
+		/// <param name="rootItem">The root item.</param>
+		/// <param name="database">The database.</param>
+		/// <returns></returns>
+		public static List<Item> GetTemplateSubitems(Item rootItem, Database database)
+		{
+			TemplateItem sitecoreTemplateItem = database.GetItem("{AB86861A-6030-46C5-B394-E8F99E8B87DB}");
+
+			return (from Item child in rootItem.Axes.GetDescendants()
+							where child.Template.ID == sitecoreTemplateItem.ID
+							select child).OrderBy(i => i.Name).ToList();
 		}
 
 		/// <summary>

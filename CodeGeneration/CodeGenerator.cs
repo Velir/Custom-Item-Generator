@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Commons.Collections;
 using CustomItemGenerator.CodeGeneration;
 using CustomItemGenerator.Util;
@@ -14,6 +16,7 @@ namespace CustomItemGenerator
 
 		//The user can choose which files to generate through the UI
 		public bool GenerateBaseFile { get; private set; }
+		public List<string> GeneratedFilePaths { get; private set; }
 		public bool GenerateInstanceFile { get; private set; }
 		public bool GenerateInterfaceFile { get; private set; }
 		public bool GenerateStaticFile { get; private set; }
@@ -28,6 +31,7 @@ namespace CustomItemGenerator
 			GenerateInterfaceFile = generateInterfaceFile;
 			GenerateStaticFile = generateStaticFile;
 			GenerationMessage = string.Empty;
+			GeneratedFilePaths = new List<string>();
 		}
 
 		public void GenerateCode()
@@ -63,6 +67,7 @@ namespace CustomItemGenerator
 					Velocity.Init();
 					sw.Write(Sitecore.Text.NVelocity.VelocityHelper.Evaluate(baseContext, template, "base-custom-item"));
 					GenerationMessage += filePath + " successfully written\n\n";
+					GeneratedFilePaths.Add(filePath);
 				}
 			}
 
@@ -98,6 +103,7 @@ namespace CustomItemGenerator
 				
 			}
 
+			GeneratedFilePaths.Add(filePath);
 			GenerationMessage += filePath + " successfully written\n\n";
 			return true;
 		}
@@ -154,25 +160,41 @@ namespace CustomItemGenerator
 				throw new DirectoryNotFoundException("Base Directory Not Found: " + customItemInformation.BaseFileRoot);
 			}
 
-			string relativeNamespace = customItemInformation.FullNameSpace.Replace(customItemInformation.BaseNamespace,
-			                                                                       string.Empty);
+			string relativeNamespace = customItemInformation.FullNameSpace.Replace(customItemInformation.BaseNamespace, string.Empty);
 
 			string[] dirNames = relativeNamespace.Split('.');
-			string relativeDirectory = customItemInformation.BaseFileRoot;
+			string baseFileRoot = customItemInformation.BaseFileRoot;
 
 			foreach (string dirName in dirNames)
 			{
-				if (string.IsNullOrEmpty(dirName)) continue;
-
-				relativeDirectory = relativeDirectory + "\\" + dirName;
-				if (!Directory.Exists(relativeDirectory))
+				if (!string.IsNullOrEmpty(dirName))
 				{
-					Directory.CreateDirectory(relativeDirectory);
-					if (!Directory.Exists(relativeDirectory))
+					baseFileRoot = baseFileRoot + @"\" + dirName;
+					if (!Directory.Exists(baseFileRoot))
 					{
-						throw new FileNotFoundException("Could not create directory: " + relativeDirectory);
+						Directory.CreateDirectory(baseFileRoot);
+						if (!Directory.Exists(baseFileRoot))
+						{
+							throw new FileNotFoundException("Could not create directory: " + baseFileRoot);
+						}
 					}
 				}
+			}
+		}
+
+		public string DelimitedCreatedFilePathString
+		{
+			get
+			{
+				StringBuilder builder = new StringBuilder();
+				string str = string.Empty;
+				foreach (string str2 in GeneratedFilePaths)
+				{
+					builder.Append(str);
+					builder.Append(str2);
+					str = "|";
+				}
+				return builder.ToString();
 			}
 		}
 	}

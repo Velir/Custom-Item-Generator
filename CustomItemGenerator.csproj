@@ -84,7 +84,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomItems\CustomItemSettingsItem.base.cs" />
+    <Compile Include="Attributes\SitecoreTemplateIdAttribute.cs" />
     <Compile Include="CustomItems\CustomItemSettingsItem.cs" />
     <Compile Include="CustomItems\FieldMappingItem.cs" />
     <Compile Include="Fields\BaseCustomField.cs" />
@@ -102,14 +102,11 @@
     <Compile Include="Fields\ListTypes\CustomMultiListField.cs" />
     <Compile Include="Fields\SimpleTypes\CustomTextField.cs" />
     <Compile Include="Fields\ListTypes\CustomTreeListField.cs" />
-    <Compile Include="Interfaces\ICustomItemFilePathProvider.cs" />
+    <Compile Include="Interfaces\ICustomItemFolderPathProvider.cs" />
     <Compile Include="Interfaces\ICustomItemNamespaceProvider.cs" />
     <Compile Include="Providers\TemplatePathFilePathProvider.cs" />
     <Compile Include="Providers\TemplatePathNameSpaceProvider.cs" />
     <Compile Include="Settings\CustomItemSettings.cs" />
-    <Compile Include="Settings\CustomItemSettingsManager.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Settings\FieldMapping.cs" />
     <Compile Include="SitecoreApp\CustomItemCodeBeside.cs" />
     <Compile Include="SitecoreApp\CustomItemFolderCodeBeside.cs" />
@@ -120,7 +117,6 @@
     <Compile Include="CodeGeneration\FieldInformation.cs" />
     <Compile Include="Util\AssemblyUtil.cs" />
     <Compile Include="Util\CodeUtil.cs" />
-    <Compile Include="Util\CustomItemUtil.cs" />
     <Compile Include="Util\FileUtil.cs" />
     <Compile Include="Util\LinkUtil.cs" />
     <Compile Include="Util\NvelocityUtil.cs" />

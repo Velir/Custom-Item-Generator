@@ -10,6 +10,11 @@ namespace CustomItemGenerator.Fields.ListTypes
 		{
 		}
 
+		public static implicit operator Item(CustomGroupedDroplinkField droplinkField)
+		{
+			return droplinkField.Item;
+		}
+
 		public Item Item
 		{
 			get

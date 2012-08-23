@@ -10,6 +10,11 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 		{
 		}
 
+		public static implicit operator string(CustomTextField textField)
+		{
+			return ((textField != null) ? textField.Text : null);
+		}
+
 		public string Text
 		{
 			get { return Rendered; }

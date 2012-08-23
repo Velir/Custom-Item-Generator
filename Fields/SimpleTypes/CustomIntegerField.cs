@@ -6,10 +6,14 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 {
 	public partial class CustomIntegerField : BaseCustomField<TextField>
 	{
-
 		public CustomIntegerField(Item item, TextField field)
 			: base(item, field)
 		{
+		}
+
+		public static implicit operator int(CustomIntegerField intField)
+		{
+			return intField.Integer;
 		}
 
 		public int Integer

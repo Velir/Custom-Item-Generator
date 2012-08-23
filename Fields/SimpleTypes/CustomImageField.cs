@@ -11,6 +11,11 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 		{
 		}
 
+		public static implicit operator MediaItem(CustomImageField imageField)
+		{
+			return ((imageField != null) ? imageField.MediaItem : null);
+		}
+
 		public MediaItem MediaItem
 		{
 			get
@@ -28,6 +33,5 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 				return LinkUtil.GetMediaUrl(MediaItem);
 			}
 		}
-
 	}
 }

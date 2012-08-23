@@ -5,8 +5,14 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 {
 	public partial class CustomCheckboxField : BaseCustomField<CheckboxField>
 	{
-		public CustomCheckboxField(Item item, CheckboxField field) : base(item, field)
+		public CustomCheckboxField(Item item, CheckboxField field)
+			: base(item, field)
 		{
+		}
+
+		public static implicit operator bool(CustomCheckboxField dateField)
+		{
+			return dateField.Checked;
 		}
 
 		public bool Checked

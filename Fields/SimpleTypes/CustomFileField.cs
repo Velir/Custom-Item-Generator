@@ -11,13 +11,18 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 		{
 		}
 
+		public static implicit operator MediaItem(CustomFileField fileField)
+		{
+			return ((fileField != null) ? fileField.MediaItem : null);
+		}
+
 		public MediaItem MediaItem
 		{
 			get
 			{
 				if (field == null) return null;
 				if (item.Fields[field.InnerField.Name] == null) return null;
-				return ((FileField) item.Fields[field.InnerField.Name]).MediaItem;
+				return ((FileField)item.Fields[field.InnerField.Name]).MediaItem;
 			}
 		}
 

@@ -15,9 +15,17 @@ namespace CustomItemGenerator.Settings
 		public string FilepathProvider { get; private set; }
 		public List<FieldMapping> FieldMappings { get; private set; }
 
-		public CustomItemSettings()
+		public CustomItemSettings(HttpContext httpContext)
+			: this(httpContext.Server.MapPath("/"))
 		{
-			XmlNode n = Factory.GetConfigNode("customItem");
+		}
+
+		public CustomItemSettings(string basePath)
+		{
+			string filename = basePath + @"\App_Config\Include\CustomItem.config";
+			XmlDocument document = new XmlDocument();
+			document.Load(filename);
+			XmlNodeList elementsByTagName = document.GetElementsByTagName("customItem");
 
 			BaseNamespace = string.Empty;
 			BaseFileOutputPath = string.Empty;
@@ -26,11 +34,9 @@ namespace CustomItemGenerator.Settings
 			FilepathProvider = string.Empty;
 			FieldMappings = new List<FieldMapping>();
 
-			//Set the base path to the nvelocity templates
-			string basePath = HttpContext.Current.Server.MapPath("/");
 			NvelocityTemplatePath = basePath + @"\sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates";
 
-			foreach (XmlNode childNode in n.ChildNodes)
+			foreach (XmlNode childNode in elementsByTagName[0].ChildNodes)
 			{
 				switch (childNode.Name)
 				{

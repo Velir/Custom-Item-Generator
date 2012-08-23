@@ -11,6 +11,11 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 		{
 		}
 
+		public static implicit operator DateTime(CustomDateField dateField)
+		{
+			return dateField.DateTime;
+		}
+
 		public DateTime DateTime
 		{
 			get

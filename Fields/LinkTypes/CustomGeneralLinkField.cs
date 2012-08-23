@@ -11,6 +11,11 @@ namespace CustomItemGenerator.Fields.LinkTypes
 		{
 		}
 
+		public static implicit operator string(CustomGeneralLinkField generalLinkField)
+		{
+			return generalLinkField.Url;
+		}
+
 		public string Url
 		{
 			get
