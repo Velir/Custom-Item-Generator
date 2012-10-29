@@ -26,6 +26,11 @@ namespace CustomItemGenerator.Util
 				Item targetItem = Sitecore.Context.Database.GetItem(field.TargetID);
 				if(targetItem == null) return string.Empty;
 
+				if (targetItem.Paths.IsMediaItem)
+                		{
+                    			return Sitecore.StringUtil.EnsurePrefix('/', Sitecore.Resources.Media.MediaManager.GetMediaUrl(targetItem));
+                		}
+
 				return LinkManager.GetItemUrl(targetItem);
 			}
 
