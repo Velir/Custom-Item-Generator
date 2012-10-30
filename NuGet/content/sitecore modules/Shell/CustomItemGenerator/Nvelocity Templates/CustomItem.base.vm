@@ -3,6 +3,7 @@ using Sitecore.Data.Items;
 using System.Collections.Generic;
 using Sitecore.Data.Fields;
 using Sitecore.Web.UI.WebControls;
+using CustomItemGenerator.Extensions;
 using CustomItemGenerator.Fields.LinkTypes;
 using CustomItemGenerator.Fields.ListTypes;
 using CustomItemGenerator.Fields.SimpleTypes;
@@ -48,6 +49,11 @@ public static implicit operator Item(${CustomItemInformation.ClassName} customIt
 	return customItem != null ? customItem.InnerItem : null;
 }
 
+public static bool IsValid(Item item)
+{
+  return item.IsDerivedFrom(TemplateId);
+}
+
 #endregion //Boilerplate CustomItem Code
 
 
@@ -65,6 +71,8 @@ public $field.FieldType $field.MethodName
 		return new ${field.FieldType}(InnerItem, InnerItem.Fields["${field.FieldName}"]);
 	}
 }
+
+public const string ${field.FieldName}FieldName = "${field.FieldName}";
 #end
 
 #end
