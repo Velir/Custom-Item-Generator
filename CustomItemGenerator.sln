@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomItemGenerator", "CustomItemGenerator.csproj", "{F4B6849B-308C-4F1A-A061-547C492B24F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomItemGenerator", "src\CustomItemGenerator.csproj", "{F4B6849B-308C-4F1A-A061-547C492B24F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>SitecoreExtension.CustomItemGenerator</id>
+		<version>1.0</version>
+		<authors>Velir</authors>
+		<owners>Velir</owners>
+		<licenseUrl>http://creativecommons.org/licenses/by/3.0/</licenseUrl>
+		<projectUrl>https://github.com/Velir/Custom-Item-Generator</projectUrl>
+		<iconUrl>http://www.sitecore.net/favicon.ico</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<summary>
+			Sitecore Custom Item Generator
+		</summary>
+		<description>
+			The custom item generator is a tool that is used to create classes which will wrap access to a template's fields. For a more in depth overview please check out the following blog post.
+
+			?Introduction to the Custom Item Generator
+			http://blog.velir.com/index.php/2010/10/19/custom-item-generator/
+
+			If you have any issues with the Custom Item Generator module, please report them to the Shared Source forum on SDN or email ?customitem@velir.com. 
+
+			Requires Sitecore CMS 6.x and Sitecore Rocks.
+		</description>
+		<releaseNotes>
+			Version 1.0 - Initial release.
+		</releaseNotes>
+		<copyright>http://creativecommons.org/licenses/by/3.0/</copyright>
+		<tags>Sitecore Developer Accelerators</tags>
+		<dependencies>
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="**\*.*" exclude="Build-NuGet-Package.cmd;NuGet.exe" />
+	</files>
+</package>
