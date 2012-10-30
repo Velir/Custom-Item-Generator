@@ -33,6 +33,12 @@ namespace CustomItemGenerator.Fields
 			}
 		}
 
+		public string RenderFormatted(string format)
+        	{
+            		var output = this.Rendered;
+            		return !string.IsNullOrWhiteSpace(output) ? string.Format(format, output) : string.Empty;
+        	}
+
 		public T Field
 		{
 			get

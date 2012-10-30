@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CustomItemGenerator</RootNamespace>
     <AssemblyName>CustomItemGenerator</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -32,6 +32,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,20 +54,20 @@
   <ItemGroup>
     <Reference Include="Sitecore.Client, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Sitecore.Client.dll</HintPath>
+      <HintPath>..\lib\Sitecore.Client.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\lib\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Sitecore.Logging.dll</HintPath>
+      <HintPath>..\lib\Sitecore.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.NVelocity, Version=0.4.2.8580, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Sitecore.NVelocity.dll</HintPath>
+      <HintPath>..\lib\Sitecore.NVelocity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -118,6 +119,7 @@
     <Compile Include="Util\AssemblyUtil.cs" />
     <Compile Include="Util\CodeUtil.cs" />
     <Compile Include="Util\FileUtil.cs" />
+    <Compile Include="Extensions\ItemExtensions.cs" />
     <Compile Include="Util\LinkUtil.cs" />
     <Compile Include="Util\NvelocityUtil.cs" />
     <Compile Include="Util\TemplateUtil.cs" />
@@ -141,10 +143,16 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
+       Other similar extension points exist, see Microsoft.Common.targets. -->
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
+  <Target Name="AfterBuild" DependsOnTargets="CopyBinaryToNuGet">
   </Target>
-  -->
+  <Target Name="CopyBinaryToNuGet">
+    <ItemGroup>
+      <DllFiles Include="$(TargetDir)$(TargetName).*" />
+    </ItemGroup>
+    <Message Text="$(SolutionDir)" />
+    <Copy SkipUnchangedFiles="true" SourceFiles="@(DllFiles)" DestinationFiles="$(SolutionDir)NuGet\lib\net40\%(Filename)%(Extension)" Condition="'$(SolutionDir)' != '*Undefined*'" />
+  </Target>
 </Project>
