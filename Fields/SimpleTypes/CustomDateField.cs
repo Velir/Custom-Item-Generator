@@ -25,5 +25,10 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 				return ((DateField)item.Fields[field.InnerField.Name]).DateTime;
 			}
 		}
+
+        public override string ToString()
+        {
+            return DateTime.ToString();
+        }
 	}
 }

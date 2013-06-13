@@ -22,7 +22,7 @@ namespace CustomItemGenerator.SitecoreApp
 		protected Database masterDb = Factory.GetDatabase("master");
 		protected Edit CustomItemNamespace;
 		protected Edit CustomItemFilePath;
-		private TemplateItem template;
+		protected TemplateItem template;
 		
 		private Checkbox GenerateBaseFile;
 		private Checkbox GenerateInstanceFile;
@@ -51,9 +51,11 @@ namespace CustomItemGenerator.SitecoreApp
 			}
 			else
 			{
-				if (!Context.ClientPage.IsEvent)
+
+                CustomItemSettings settings = new CustomItemSettings(HttpContext.Current);
+                
+                if (settings.AutoUpdate || !Context.ClientPage.IsEvent)
 				{
-					CustomItemSettings settings = new CustomItemSettings(HttpContext.Current);
 
 					string defaultNamespace = settings.BaseNamespace;
 					string defaultFilePath = settings.BaseFileOutputPath;
@@ -91,14 +93,19 @@ namespace CustomItemGenerator.SitecoreApp
 			ICustomItemNamespaceProvider namespaceProvider = AssemblyUtil.GetNamespaceProvider(settings.NamespaceProvider);
 			ICustomItemFolderPathProvider filePathProvider = AssemblyUtil.GetFilePathProvider(settings.FilepathProvider);
 
-			CustomItemInformation customItemInformation = new CustomItemInformation(template, CustomItemNamespace.Value,
-																																							CustomItemFilePath.Value, filePathProvider, namespaceProvider);
-			CodeGenerator codeGenerator = new CodeGenerator(customItemInformation,
-						GenerateBaseFile.Checked, GenerateInstanceFile.Checked, GenerateInterfaceFile.Checked, GenerateStaticFile.Checked);
-			codeGenerator.GenerateCode();
+			CustomItemInformation customItemInformation = new CustomItemInformation(template, CustomItemNamespace.Value, 
+                                                                                    CustomItemFilePath.Value, filePathProvider, namespaceProvider);
 
-			SheerResponse.Alert(codeGenerator.GenerationMessage, new string[0]);
+            if (settings.AutoUpdate) {
+                new CodeGenerator(customItemInformation, true, false, false, false).GenerateCode();
+            }
+            else {
+                CodeGenerator codeGenerator = new CodeGenerator(customItemInformation,
+                            GenerateBaseFile.Checked, GenerateInstanceFile.Checked, GenerateInterfaceFile.Checked, GenerateStaticFile.Checked);
+                codeGenerator.GenerateCode();
 
+                SheerResponse.Alert(codeGenerator.GenerationMessage, new string[0]);
+            }
 			base.OnOK(sender, args);
 		}
 	}

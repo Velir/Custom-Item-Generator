@@ -53,20 +53,20 @@
   <ItemGroup>
     <Reference Include="Sitecore.Client, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Sitecore.Client.dll</HintPath>
+      <HintPath>..\CustomItemGeneratorMaster\bin\Sitecore.Client.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.Kernel, Version=6.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Sitecore.Kernel.dll</HintPath>
+      <HintPath>..\CustomItemGeneratorMaster\bin\Sitecore.Kernel.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Logging, Version=1.2.0.30715, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Sitecore.Logging.dll</HintPath>
+      <HintPath>..\CustomItemGeneratorMaster\bin\Sitecore.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Sitecore.NVelocity, Version=0.4.2.8580, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Sitecore.NVelocity.dll</HintPath>
+      <HintPath>..\CustomItemGeneratorMaster\bin\Sitecore.NVelocity.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -104,6 +104,7 @@
     <Compile Include="Fields\ListTypes\CustomTreeListField.cs" />
     <Compile Include="Interfaces\ICustomItemFolderPathProvider.cs" />
     <Compile Include="Interfaces\ICustomItemNamespaceProvider.cs" />
+    <Compile Include="Pipelines\AutoUpdate.cs" />
     <Compile Include="Providers\TemplatePathFilePathProvider.cs" />
     <Compile Include="Providers\TemplatePathNameSpaceProvider.cs" />
     <Compile Include="Settings\CustomItemSettings.cs" />

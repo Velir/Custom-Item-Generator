@@ -14,6 +14,7 @@ namespace CustomItemGenerator.Settings
 		public string NamespaceProvider { get; private set; }
 		public string FilepathProvider { get; private set; }
 		public List<FieldMapping> FieldMappings { get; private set; }
+        public bool AutoUpdate { get; set; }
 
 		public CustomItemSettings(HttpContext httpContext)
 			: this(httpContext.Server.MapPath("/"))
@@ -33,7 +34,7 @@ namespace CustomItemGenerator.Settings
 			NamespaceProvider = string.Empty;
 			FilepathProvider = string.Empty;
 			FieldMappings = new List<FieldMapping>();
-
+            bool update = false;
 			NvelocityTemplatePath = basePath + @"\sitecore modules\Shell\CustomItemGenerator\Nvelocity Templates";
 
 			foreach (XmlNode childNode in elementsByTagName[0].ChildNodes)
@@ -67,6 +68,11 @@ namespace CustomItemGenerator.Settings
 						}
 
 						break;
+
+                    case "AutoUpdate":
+                        bool.TryParse(childNode.Attributes["onSave"].Value, out update);
+                        AutoUpdate = update;
+                        break;
 				}
 			}
 		}

@@ -19,5 +19,10 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 		{
 			get { return Rendered; }
 		}
+
+        public override string ToString()
+        {
+            return Text.ToString();
+        }
 	}
 }
