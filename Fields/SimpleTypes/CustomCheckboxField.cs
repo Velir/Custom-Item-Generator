@@ -10,9 +10,9 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 		{
 		}
 
-		public static implicit operator bool(CustomCheckboxField dateField)
+		public static implicit operator bool(CustomCheckboxField checkboxField)
 		{
-			return dateField.Checked;
+            return checkboxField.Checked;
 		}
 
 		public bool Checked
@@ -24,5 +24,10 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 				return ((CheckboxField)item.Fields[field.InnerField.Name]).Checked;
 			}
 		}
+
+        public override string ToString()
+        {
+            return Checked.ToString();
+        }
 	}
 }

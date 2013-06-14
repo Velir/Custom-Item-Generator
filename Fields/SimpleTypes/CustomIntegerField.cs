@@ -33,5 +33,10 @@ namespace CustomItemGenerator.Fields.SimpleTypes
 				return int.MinValue;
 			}
 		}
+
+        public override string ToString()
+        {
+            return Integer.ToString();
+        }
 	}
 }
